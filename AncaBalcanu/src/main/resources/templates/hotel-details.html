@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<h1 th:text="${hotel.name}">Hotel Name</h1>
+<p>Latitude: <span th:text="${hotel.latitude}">Latitude</span></p>
+<p>Longitude: <span th:text="${hotel.longitude}">Longitude</span></p>
+<h2>Rooms</h2>
+<table>
+    <tr>
+        <th>Room Number</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Available</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="room : ${hotel.rooms}">
+        <td th:text="${room.roomNumber}">Room Number</td>
+        <td th:text="${room.type}">Type</td>
+        <td th:text="${room.price}">Price</td>
+        <td th:text="${room.available ? 'Yes' : 'No'}">Available</td>
+        <td>
+            <form th:action="@{/rooms/{id}/book(id=${room.id})}" method="post" th:if="${room.available}">
+                <button type="submit">Book</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/hotels}">Back to Hotels</a>
+</body>
+</html>
